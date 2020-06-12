@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/MenuScripts/StartMenuScreenScript.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/StartMenuScreen.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Icons/back.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/StartMenuMainText.tres" type="DynamicFont" id=4]
+
+
+[node name="StartMenu" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+margin_right = 378.0
+margin_bottom = 840.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateLobbyButton" type="Button" parent="."]
+margin_left = 1.0
+margin_top = 279.0
+margin_right = 377.0
+margin_bottom = 359.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+action_mode = 0
+text = "CREATE GAME"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinLobbyButton" type="Button" parent="."]
+margin_top = 374.302
+margin_right = 377.0
+margin_bottom = 454.302
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+text = "JOIN GAME"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackToMainScreenButton" type="Button" parent="."]
+margin_left = -21.2164
+margin_top = 757.162
+margin_right = 180.784
+margin_bottom = 834.162
+rect_pivot_offset = Vector2( 214.881, -421.387 )
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+text = "BACK"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back" type="Sprite" parent="BackToMainScreenButton"]
+position = Vector2( 44.5958, 40.1367 )
+scale = Vector2( 0.0308824, 0.0308824 )
+texture = ExtResource( 3 )

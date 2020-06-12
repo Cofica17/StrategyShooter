@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ModelsScript/AllyLane.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/GameScripts/Spells/AllyLaneSpellCastHighlight.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0, 0 )
+
+[node name="Lane" type="Control"]
+margin_right = 69.0
+margin_bottom = 259.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpellAnimation" type="AnimatedSprite" parent="."]
+offset = Vector2( 34.5, 129.5 )
+flip_v = true
+
+[node name="LaneArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LaneArea"]
+shape = SubResource( 1 )
+
+[node name="SpellCastHighlight" type="Sprite" parent="."]
+offset = Vector2( 34.5, 129.5 )
+script = ExtResource( 2 )
+[connection signal="gui_input" from="." to="." method="_on_Lane_gui_input"]
+[connection signal="movementSpeedUpButtonClicked" from="." to="SpellCastHighlight" method="_on_Lane_movementSpeedUpButtonClicked"]
+[connection signal="animation_finished" from="SpellAnimation" to="." method="_on_SpellAnimation_animation_finished"]

@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/StartMenuMainText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/MenuScripts/MainMenuScene.gd" type="Script" id=2]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 378.0
+margin_bottom = 840.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayButton" type="Button" parent="ColorRect"]
+margin_top = 280.0
+margin_right = 376.0
+margin_bottom = 360.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+text = "PLAY"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="ColorRect"]
+margin_top = 453.176
+margin_right = 376.0
+margin_bottom = 533.176
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+text = "EXIT"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsButton" type="Button" parent="ColorRect"]
+margin_left = 6.10352e-05
+margin_top = 362.711
+margin_right = 376.0
+margin_bottom = 442.711
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+text = "SETTINGS"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Fonts/player_namesFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/GameScripts/Tower/TowerScript.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Buildings/BlueTeamBuildings/TowerBaseBlueTeam.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Buildings/BlueTeamBuildings/TurretBlueTeamLvl1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/ExplosionsETC/Firing1.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/ExplosionsETC/Firing2.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/ExplosionsETC/Firing3.png" type="Texture" id=7]
+[ext_resource path="res://Models/GameModels/TowerBulletModel.tscn" type="PackedScene" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 131.922, 85.767 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 211.457, 25.3002 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[node name="Tower" type="KinematicBody2D"]
+position = Vector2( 189.06, 641.329 )
+script = ExtResource( 2 )
+towerBulletModel = ExtResource( 8 )
+
+[node name="TowerArea2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="ShootingRange" type="CollisionShape2D" parent="TowerArea2D"]
+position = Vector2( 0, -73.8382 )
+shape = SubResource( 1 )
+
+[node name="TowerCollision" type="CollisionShape2D" parent="."]
+position = Vector2( -2.0563, 24.7146 )
+scale = Vector2( 0.4, 1 )
+shape = SubResource( 2 )
+
+[node name="TowerBase" type="Sprite" parent="."]
+position = Vector2( -2.14264, 26.5787 )
+scale = Vector2( 1.103, 1 )
+texture = ExtResource( 3 )
+
+[node name="TowerTurret" type="Sprite" parent="."]
+position = Vector2( -2.09259, 12.5065 )
+z_as_relative = false
+texture = ExtResource( 4 )
+
+[node name="ShootingAnimation" type="AnimatedSprite" parent="TowerTurret"]
+visible = false
+position = Vector2( -0.348267, -37.4053 )
+scale = Vector2( 0.665113, 0.932889 )
+frames = SubResource( 3 )
+flip_v = true
+
+[node name="TowerHealth" type="Label" parent="."]
+margin_left = 100.061
+margin_top = 13.9047
+margin_right = 158.061
+margin_bottom = 39.9047
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerShootCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+[connection signal="animation_finished" from="TowerTurret/ShootingAnimation" to="." method="_on_ShootingAnimation_animation_finished"]

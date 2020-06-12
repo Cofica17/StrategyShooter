@@ -1,0 +1,392 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Models/GameModels/Tower.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/GameScripts/Enemy/EnemySoldierRpcControllerScript.gd" type="Script" id=2]
+[ext_resource path="res://Models/MenuModels/BackButtonNode.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/GameScripts/Enemy/EnemyTowerRpcControllerScript.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/GameScripts/ContestPoint/ContestPointHealth.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/GameScripts/GameScript.gd" type="Script" id=6]
+[ext_resource path="res://Models/GameModels/SoldierModel.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/GameScripts/Soldier/SoldierContainerScript.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/GameScripts/StartOfFazeScript.gd" type="Script" id=9]
+[ext_resource path="res://Fonts/StartMenuMainText.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Scripts/GameScripts/LanesScript.gd" type="Script" id=11]
+[ext_resource path="res://Models/ContestPointsFolder/ContestPoint.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Fonts/player_namesFont.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Sprites/GameBackground/GameBackground.png" type="Texture" id=14]
+[ext_resource path="res://Scripts/GameScripts/Enemy/EnemySoldierContainerScript.gd" type="Script" id=15]
+[ext_resource path="res://Scripts/GameScripts/AllHealthAndDamageValuesScript.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/GameScripts/ContestPoint/ContestPointPower.gd" type="Script" id=17]
+[ext_resource path="res://Sprites/Spells/ArtillerySpell.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Spells/MoveSpeedIncreaseSpell.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/Spells/SoldierUnitSpawn.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/Spells/MoveSpeedSlowSpell.png" type="Texture" id=21]
+[ext_resource path="res://Sprites/Spells/MineSpell.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/Spells/TankUnitSpawn.png" type="Texture" id=23]
+[ext_resource path="res://Scripts/GameScripts/ContestPoint/ContestPointManpower.gd" type="Script" id=24]
+[ext_resource path="res://Scripts/GameScripts/UnitSpawnsScript.gd" type="Script" id=25]
+[ext_resource path="res://Scripts/GameScripts/ContestPoint/ContestPointTowerShootingCooldown.gd" type="Script" id=26]
+[ext_resource path="res://Scripts/GameScripts/Enemy/EnemyLanesScript.gd" type="Script" id=27]
+[ext_resource path="res://Scripts/GameScripts/Spells/ArtillerySpell.gd" type="Script" id=28]
+[ext_resource path="res://Models/GameModels/AllyLane.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Scripts/GameScripts/Spells/SpellRpcController.gd" type="Script" id=30]
+[ext_resource path="res://Models/GameModels/EnemyLane.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Scripts/GameScripts/Spells/MinesSpell.gd" type="Script" id=32]
+[ext_resource path="res://Scripts/GameScripts/Spells/MovementSpeedIncreaseSpell.gd" type="Script" id=33]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+func _ready():
+	pass 
+"
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="GameMap" type="Node2D" parent="."]
+
+[node name="BackgroundGame" type="Sprite" parent="GameMap"]
+position = Vector2( 188.524, 420.157 )
+scale = Vector2( 0.923541, 0.941119 )
+texture = ExtResource( 14 )
+
+[node name="ManpowerLeftLabel" type="Label" parent="GameMap"]
+margin_left = 166.501
+margin_top = 795.168
+margin_right = 368.501
+margin_bottom = 829.168
+custom_fonts/font = ExtResource( 13 )
+text = "Manpower left: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MyTower" parent="." instance=ExtResource( 1 )]
+towerTurretSpritePath = "res://Sprites/Buildings/BlueTeamBuildings/TurretBlueTeamLvl1.png"
+
+[node name="Lanes" type="Node" parent="."]
+script = ExtResource( 11 )
+maxManpowerPerLane = 5
+
+[node name="OuterLeftLane" parent="Lanes" instance=ExtResource( 29 )]
+margin_left = 28.5681
+margin_top = 387.71
+margin_right = 97.5681
+margin_bottom = 646.71
+
+[node name="InnerLeftLane" parent="Lanes" instance=ExtResource( 29 )]
+margin_left = 99.6396
+margin_top = 383.629
+margin_right = 157.64
+margin_bottom = 642.629
+
+[node name="MiddleLane" parent="Lanes" instance=ExtResource( 29 )]
+margin_left = 157.0
+margin_top = 355.0
+margin_right = 218.0
+margin_bottom = 645.0
+
+[node name="InnerRightLane" parent="Lanes" instance=ExtResource( 29 )]
+margin_left = 215.36
+margin_top = 383.629
+margin_right = 277.36
+margin_bottom = 642.629
+
+[node name="OuterRightLane" parent="Lanes" instance=ExtResource( 29 )]
+margin_left = 281.36
+margin_top = 386.35
+margin_right = 348.36
+margin_bottom = 645.35
+
+[node name="ContestPoints" type="Node" parent="Lanes"]
+
+[node name="OuterLeftContestPoint" parent="Lanes/ContestPoints" instance=ExtResource( 12 )]
+position = Vector2( 62.86, 359 )
+script = ExtResource( 5 )
+spriteNeutralImagePath = "res://Sprites/CapturePoints/PowerUp1/PowerUp1Neutral.png"
+spriteBlueImagePath = "res://Sprites/CapturePoints/PowerUp1/PowerUp1Blue.png"
+spriteRedImagePath = "res://Sprites/CapturePoints/PowerUp1/PowerUp1Red.png"
+
+[node name="InnerLeftContestPoint" parent="Lanes/ContestPoints" instance=ExtResource( 12 )]
+position = Vector2( 128.406, 359 )
+script = ExtResource( 17 )
+spriteNeutralImagePath = "res://Sprites/CapturePoints/PowerUp2/PowerUp2Neutral.png"
+spriteBlueImagePath = "res://Sprites/CapturePoints/PowerUp2/PowerUp2Blue.png"
+spriteRedImagePath = "res://Sprites/CapturePoints/PowerUp2/PowerUp2Red.png"
+
+[node name="InnerRightContestPoint" parent="Lanes/ContestPoints" instance=ExtResource( 12 )]
+position = Vector2( 246.893, 359 )
+script = ExtResource( 24 )
+spriteNeutralImagePath = "res://Sprites/CapturePoints/PowerUp3/PowerUp3Neutral.png"
+spriteBlueImagePath = "res://Sprites/CapturePoints/PowerUp3/PowerUp3Blue.png"
+spriteRedImagePath = "res://Sprites/CapturePoints/PowerUp3/PowerUp3Red.png"
+
+[node name="OuterRightContestPoint" parent="Lanes/ContestPoints" instance=ExtResource( 12 )]
+position = Vector2( 312.439, 359 )
+script = ExtResource( 26 )
+spriteNeutralImagePath = "res://Sprites/CapturePoints/PowerUp4/PowerUp4Neutral.png"
+spriteBlueImagePath = "res://Sprites/CapturePoints/PowerUp4/PowerUp4Blue.png"
+spriteRedImagePath = "res://Sprites/CapturePoints/PowerUp4/PowerUp4Red.png"
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="SoldierSpawnerTimer" type="Timer" parent="Timers"]
+autostart = true
+
+[node name="StartOfStrategyFazeTimer" type="Timer" parent="Timers"]
+one_shot = true
+autostart = true
+
+[node name="DurationOfStrategyFaze" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Containers" type="Node" parent="."]
+
+[node name="SoldiersContainer" type="Node" parent="Containers"]
+script = ExtResource( 8 )
+soldierModel = ExtResource( 7 )
+
+[node name="SoldierBulletsContainer" type="Node" parent="Containers"]
+
+[node name="SpellRpcContainer" type="Node" parent="Containers"]
+script = ExtResource( 30 )
+
+[node name="Spells" type="Node" parent="."]
+
+[node name="ArtillerySpell" type="TextureButton" parent="Spells"]
+margin_left = 25.2056
+margin_top = 705.355
+margin_right = 238.206
+margin_bottom = 918.355
+rect_scale = Vector2( 0.25, 0.25 )
+texture_normal = ExtResource( 18 )
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MinesSpell" type="TextureButton" parent="Spells"]
+margin_left = 83.9966
+margin_top = 704.682
+margin_right = 296.997
+margin_bottom = 917.682
+rect_scale = Vector2( 0.25, 0.25 )
+texture_normal = ExtResource( 22 )
+script = ExtResource( 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MovementSpeedIncreaseSpell" type="TextureButton" parent="Spells"]
+margin_left = 23.5331
+margin_top = 764.965
+margin_right = 236.533
+margin_bottom = 977.965
+rect_scale = Vector2( 0.25, 0.25 )
+texture_normal = ExtResource( 19 )
+script = ExtResource( 33 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MovementSpeedSlowSpell" type="TextureButton" parent="Spells"]
+margin_left = 84.1604
+margin_top = 765.383
+margin_right = 297.16
+margin_bottom = 978.383
+rect_scale = Vector2( 0.25, 0.25 )
+texture_normal = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnitSpawnsButtons" type="Node" parent="."]
+script = ExtResource( 25 )
+
+[node name="SpawnSoldier" type="TextureButton" parent="UnitSpawnsButtons"]
+margin_left = 199.432
+margin_top = 718.614
+margin_right = 412.432
+margin_bottom = 931.614
+rect_scale = Vector2( 0.35, 0.35 )
+action_mode = 0
+texture_normal = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpawnTank" type="TextureButton" parent="UnitSpawnsButtons"]
+margin_left = 277.715
+margin_top = 718.614
+margin_right = 490.715
+margin_bottom = 931.614
+rect_scale = Vector2( 0.35, 0.35 )
+texture_normal = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EverythingEnemy" type="Node" parent="."]
+script = SubResource( 1 )
+
+[node name="EnemyTower" parent="EverythingEnemy" instance=ExtResource( 1 )]
+position = Vector2( 189.06, 80 )
+rotation = 3.14159
+towerTurretSpritePath = "res://Sprites/Buildings/RedTeamBuildings/TurretRedTeamLvl1.png"
+
+[node name="EnemyTowerController" type="Node" parent="EverythingEnemy"]
+script = ExtResource( 4 )
+
+[node name="EnemyLanes" type="Node" parent="EverythingEnemy"]
+script = ExtResource( 27 )
+
+[node name="OuterLeftLane" parent="EverythingEnemy/EnemyLanes" instance=ExtResource( 31 )]
+margin_left = 30.0
+margin_top = 77.0
+margin_right = 99.0
+margin_bottom = 336.0
+
+[node name="InnerLeftLane" parent="EverythingEnemy/EnemyLanes" instance=ExtResource( 31 )]
+margin_left = 100.0
+margin_top = 77.0
+margin_right = 157.0
+margin_bottom = 336.0
+
+[node name="MiddleLane" parent="EverythingEnemy/EnemyLanes" instance=ExtResource( 31 )]
+margin_left = 160.0
+margin_top = 79.0
+margin_right = 218.0
+margin_bottom = 360.0
+
+[node name="InnerRightLane" parent="EverythingEnemy/EnemyLanes" instance=ExtResource( 31 )]
+margin_left = 221.0
+margin_top = 81.0
+margin_right = 280.0
+margin_bottom = 333.0
+
+[node name="OuterRightLane" parent="EverythingEnemy/EnemyLanes" instance=ExtResource( 31 )]
+margin_left = 281.158
+margin_top = 79.0
+margin_right = 348.158
+margin_bottom = 336.0
+
+[node name="Containers" type="Node" parent="EverythingEnemy"]
+
+[node name="EnemySoldierContainer" type="Node" parent="EverythingEnemy/Containers"]
+script = ExtResource( 15 )
+soldierModel = ExtResource( 7 )
+
+[node name="EnemyController" type="Node" parent="EverythingEnemy/Containers/EnemySoldierContainer"]
+script = ExtResource( 2 )
+
+[node name="BackButtonNode" parent="." instance=ExtResource( 3 )]
+visible = false
+position = Vector2( 0, -120 )
+
+[node name="StartOfFazeBackground" type="Node" parent="."]
+
+[node name="StartOfFaze" type="ColorRect" parent="StartOfFazeBackground"]
+visible = false
+modulate = Color( 1, 0.913725, 0.913725, 1 )
+light_mask = 0
+margin_left = -11.2135
+margin_top = -4.21333
+margin_right = 385.786
+margin_bottom = 847.786
+color = Color( 0.0705882, 0.0666667, 0.0666667, 0.796078 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FazeTitle" type="Label" parent="StartOfFazeBackground/StartOfFaze"]
+margin_left = 13.4131
+margin_top = 227.19
+margin_right = 382.413
+margin_bottom = 379.19
+custom_fonts/font = ExtResource( 10 )
+text = "STRATEGY FAZE"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AllHealthAndDamageValues" type="Node" parent="."]
+script = ExtResource( 16 )
+[connection signal="fightFateStartingSignal" from="." to="Lanes/ContestPoints/InnerLeftContestPoint" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Lanes/ContestPoints/InnerRightContestPoint" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Lanes/ContestPoints/OuterRightContestPoint" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Lanes/ContestPoints/OuterLeftContestPoint" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Spells/MovementSpeedIncreaseSpell" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Spells/MinesSpell" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Spells/ArtillerySpell" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Containers/SoldiersContainer" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="Lanes" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFateStartingSignal" from="." to="EverythingEnemy/Containers/EnemySoldierContainer" method="_on_Game_fightFateStartingSignal"]
+[connection signal="fightFazeEnded" from="." to="MyTower" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Lanes/ContestPoints/InnerLeftContestPoint" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Lanes/ContestPoints/InnerRightContestPoint" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Lanes/ContestPoints/OuterRightContestPoint" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Lanes/ContestPoints/OuterLeftContestPoint" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="StartOfFazeBackground/StartOfFaze" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Spells/MovementSpeedIncreaseSpell" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Spells/MinesSpell" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Spells/ArtillerySpell" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="Lanes" method="_on_Game_fightFazeEnded"]
+[connection signal="fightFazeEnded" from="." to="EverythingEnemy/EnemyLanes" method="_on_Game_fightFazeEnded"]
+[connection signal="zeroManpowerReachedSignal" from="." to="Lanes" method="_on_Game_zeroManpowerReachedSignal"]
+[connection signal="spawnSoldier" from="Lanes" to="." method="_on_Lanes_spawnSoldier"]
+[connection signal="spawnSoldier" from="Lanes" to="Containers/SoldiersContainer" method="_on_Lanes_spawnSoldier"]
+[connection signal="tellEnemySoldierSpawnedSignal" from="Lanes" to="EverythingEnemy/EnemyLanes" method="_on_Lanes_tellEnemySoldierSpawnedSignal"]
+[connection signal="gui_input" from="Lanes/OuterLeftLane" to="Lanes" method="_on_OuterLeftLane_gui_input"]
+[connection signal="movementSpeedUpSpellCasted" from="Lanes/OuterLeftLane" to="Spells/MovementSpeedIncreaseSpell" method="_on_OuterLeftLane_movementSpeedUpSpellCasted"]
+[connection signal="gui_input" from="Lanes/InnerLeftLane" to="Lanes" method="_on_InnerLeftLane_gui_input"]
+[connection signal="movementSpeedUpSpellCasted" from="Lanes/InnerLeftLane" to="Spells/MovementSpeedIncreaseSpell" method="_on_InnerLeftLane_movementSpeedUpSpellCasted"]
+[connection signal="gui_input" from="Lanes/MiddleLane" to="Lanes" method="_on_MiddleLane_gui_input"]
+[connection signal="movementSpeedUpSpellCasted" from="Lanes/MiddleLane" to="Spells/MovementSpeedIncreaseSpell" method="_on_MiddleLane_movementSpeedUpSpellCasted"]
+[connection signal="gui_input" from="Lanes/InnerRightLane" to="Lanes" method="_on_InnerRightLane_gui_input"]
+[connection signal="movementSpeedUpSpellCasted" from="Lanes/InnerRightLane" to="Spells/MovementSpeedIncreaseSpell" method="_on_InnerRightLane_movementSpeedUpSpellCasted"]
+[connection signal="gui_input" from="Lanes/OuterRightLane" to="Lanes" method="_on_OuterRightLane_gui_input"]
+[connection signal="movementSpeedUpSpellCasted" from="Lanes/OuterRightLane" to="Spells/MovementSpeedIncreaseSpell" method="_on_OuterRightLane_movementSpeedUpSpellCasted"]
+[connection signal="buffApplied" from="Lanes/ContestPoints/OuterRightContestPoint" to="MyTower" method="_on_OuterRightContestPoint_buffApplied"]
+[connection signal="timeout" from="Timers/StartOfStrategyFazeTimer" to="." method="_on_StartOfStrategyFazeTimer_timeout"]
+[connection signal="timeout" from="Timers/DurationOfStrategyFaze" to="." method="_on_DurationOfStrategyFaze_timeout"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="EverythingEnemy/EnemyLanes/InnerLeftLane" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="EverythingEnemy/EnemyLanes/OuterRightLane" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="EverythingEnemy/EnemyLanes/InnerRightLane" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="EverythingEnemy/EnemyLanes/MiddleLane" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="EverythingEnemy/EnemyLanes/OuterLeftLane" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/ArtillerySpell" to="Spells/ArtillerySpell" method="_on_ArtillerySpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="EverythingEnemy/EnemyLanes/InnerLeftLane" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="EverythingEnemy/EnemyLanes/OuterRightLane" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="EverythingEnemy/EnemyLanes/InnerRightLane" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="EverythingEnemy/EnemyLanes/MiddleLane" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="EverythingEnemy/EnemyLanes/OuterLeftLane" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MinesSpell" to="Spells/MinesSpell" method="_on_MinesSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Lanes/OuterRightLane" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Lanes/InnerLeftLane" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Lanes/OuterLeftLane" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Lanes/MiddleLane" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Lanes/InnerRightLane" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="pressed" from="Spells/MovementSpeedIncreaseSpell" to="Spells/MovementSpeedIncreaseSpell" method="_on_MovementSpeedIncreaseSpell_pressed"]
+[connection signal="spawnSoldiersFlag" from="UnitSpawnsButtons" to="Lanes" method="_on_UnitSpawnsButtons_spawnSoldiersFlag"]
+[connection signal="spawnTanksFlag" from="UnitSpawnsButtons" to="Lanes" method="_on_UnitSpawnsButtons_spawnTanksFlag"]
+[connection signal="pressed" from="UnitSpawnsButtons/SpawnSoldier" to="UnitSpawnsButtons" method="_on_SpawnSoldier_pressed"]
+[connection signal="pressed" from="UnitSpawnsButtons/SpawnTank" to="UnitSpawnsButtons" method="_on_SpawnTank_pressed"]
+[connection signal="enemySpawnedSoldierSignal" from="EverythingEnemy/EnemyLanes" to="EverythingEnemy/Containers/EnemySoldierContainer" method="_on_EnemyLanes_enemySpawnedSoldierSignal"]
+[connection signal="artillerySpellCasted" from="EverythingEnemy/EnemyLanes/OuterLeftLane" to="Spells/ArtillerySpell" method="_on_OuterLeftLane_artillerySpellCasted"]
+[connection signal="minesSpellCasted" from="EverythingEnemy/EnemyLanes/OuterLeftLane" to="Spells/MinesSpell" method="_on_OuterLeftLane_minesSpellCasted"]
+[connection signal="artillerySpellCasted" from="EverythingEnemy/EnemyLanes/InnerLeftLane" to="Spells/ArtillerySpell" method="_on_InnerLeftLane_artillerySpellCasted"]
+[connection signal="minesSpellCasted" from="EverythingEnemy/EnemyLanes/InnerLeftLane" to="Spells/MinesSpell" method="_on_InnerLeftLane_minesSpellCasted"]
+[connection signal="artillerySpellCasted" from="EverythingEnemy/EnemyLanes/MiddleLane" to="Spells/ArtillerySpell" method="_on_MiddleLane_artillerySpellCasted"]
+[connection signal="minesSpellCasted" from="EverythingEnemy/EnemyLanes/MiddleLane" to="Spells/MinesSpell" method="_on_MiddleLane_minesSpellCasted"]
+[connection signal="artillerySpellCasted" from="EverythingEnemy/EnemyLanes/InnerRightLane" to="Spells/ArtillerySpell" method="_on_InnerRightLane_artillerySpellCasted"]
+[connection signal="minesSpellCasted" from="EverythingEnemy/EnemyLanes/InnerRightLane" to="Spells/MinesSpell" method="_on_InnerRightLane_minesSpellCasted"]
+[connection signal="artillerySpellCasted" from="EverythingEnemy/EnemyLanes/OuterRightLane" to="Spells/ArtillerySpell" method="_on_OuterRightLane_artillerySpellCasted"]
+[connection signal="minesSpellCasted" from="EverythingEnemy/EnemyLanes/OuterRightLane" to="Spells/MinesSpell" method="_on_OuterRightLane_minesSpellCasted"]

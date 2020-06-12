@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/GameScripts/Tower/TowerBulletScript.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/ExplosionsETC/Bullet.png" type="Texture" id=2]
+
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.52108
+height = 9.13162
+
+[node name="TowerBullet" type="KinematicBody2D"]
+script = ExtResource( 1 )
+speed = 280.0
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.807637, 0.552908 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.110184, -0.11018 )
+z_as_relative = false
+shape = SubResource( 1 )

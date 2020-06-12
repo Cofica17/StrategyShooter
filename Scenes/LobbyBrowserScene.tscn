@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/LobbyScripts/LobbyBrowserScript.gd" type="Script" id=1]
+[ext_resource path="res://NetworkingAPI/ServerSearcher.gd" type="Script" id=2]
+[ext_resource path="res://Models/MenuModels/LobbyInstanceModel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Fonts/StartMenuMainText.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Models/MenuModels/BackButtonNode.tscn" type="PackedScene" id=5]
+
+
+[node name="LobbyBrowser" type="Node2D"]
+script = ExtResource( 1 )
+serverListPath = NodePath("ServerList")
+lobbyInstance = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 379.0
+margin_bottom = 840.0
+rect_pivot_offset = Vector2( 189.5, 778.066 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ServerList" type="VBoxContainer" parent="."]
+margin_left = 14.0
+margin_top = 145.0
+margin_right = 360.0
+margin_bottom = 744.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ServerSearcher" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="LookingForLobbyLbl" type="Label" parent="."]
+margin_left = -4.09418
+margin_top = 1.07184
+margin_right = 378.906
+margin_bottom = 161.072
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Looking for active
+ lobbies..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButtonNode" parent="." instance=ExtResource( 5 )]
+[connection signal="new_server" from="ServerSearcher" to="." method="_on_ServerSearcher_new_server"]
+[connection signal="remove_server" from="ServerSearcher" to="." method="_on_ServerSearcher_remove_server"]
